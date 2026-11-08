@@ -1,0 +1,24 @@
+name: chinook
+
+services:
+  db:
+    image: mariadb:13-ubi
+    restart: unless-stopped
+    ports:
+      - 3400:3306
+    networks:
+      - chinook-net
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d/
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+
+volumes:
+  db-data:
+
+networks:
+  chinook-net:
