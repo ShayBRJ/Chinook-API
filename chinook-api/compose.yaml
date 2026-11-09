@@ -4,8 +4,8 @@ services:
   db:
     image: mariadb:13-ubi
     restart: unless-stopped
-    ports:
-      - 3400:3306
+    expose:
+      - 3306
     networks:
       - chinook-net
     volumes:
@@ -44,9 +44,37 @@ services:
       - php
     networks:
       - chinook-net
+  # heidisql:
+  #   image: tsari/heidisql:latest
+  #   container_name: heidisql
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3400:3400"
+  #   networks:
+  #     - chinook-net
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - heidisql-data:/config
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8200:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+    depends_on:
+      - db
+    networks:
+      - chinook-net
 
 volumes:
   db-data:
+  heidisql-data:
 
 networks:
   chinook-net:
