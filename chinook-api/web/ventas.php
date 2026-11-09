@@ -38,7 +38,7 @@ try {
     if ($pais) {
         $query .= " WHERE BillingCountry = :pais";
     }
-    $query .= " GROUP BY BillingCountry";
+    $query .= " GROUP BY BillingCountry ORDER BY SUM(Total) DESC";
 
     // CONSULTA PARA OBTENER EL TOTAL DE PAÍSES.
     $cuenta = $pdo->prepare("SELECT COUNT(*) FROM ($query) AS ventas");

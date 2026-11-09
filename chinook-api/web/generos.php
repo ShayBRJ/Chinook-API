@@ -38,7 +38,7 @@ try {
         $query .= " WHERE g.Name = :genero";
     }
     $query .= " GROUP BY g.GenreId 
-                ORDER BY g.GenreId";
+                ORDER BY COUNT(t.Name) DESC";
 
     // CONSULTA PARA OBTENER EL TOTAL DE Generos.
     $cuenta = $pdo->prepare("SELECT COUNT(*) FROM ($query) AS generos");

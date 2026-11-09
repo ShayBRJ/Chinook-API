@@ -73,7 +73,7 @@ try {
                 ON a.AlbumId = t.AlbumId
               WHERE a.ArtistId = :id
               GROUP BY a.AlbumId, a.Title
-              ORDER BY a.Title ASC";
+              ORDER BY a.Title ASC, COUNT(t.TrackId) DESC";
 
     $consulta = $pdo->prepare($query);
     $consulta->bindValue(':id', $id, PDO::PARAM_INT);

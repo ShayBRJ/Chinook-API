@@ -58,7 +58,6 @@ services:
   #     - heidisql-data:/config
   phpmyadmin:
     image: phpmyadmin:5
-    container_name: phpmyadmin
     restart: unless-stopped
     ports:
       - "8200:80"
