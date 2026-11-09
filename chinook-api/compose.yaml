@@ -4,8 +4,8 @@ services:
   db:
     image: mariadb:13-ubi
     restart: unless-stopped
-    expose:
-      - 3306
+    ports:
+      - 3400:3306
     networks:
       - chinook-net
     volumes:
