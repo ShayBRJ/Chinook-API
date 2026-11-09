@@ -1,1 +1,0 @@
-GRANT SELECT ON Chinook_AutoIncrement.* TO 'borja'@'%'
