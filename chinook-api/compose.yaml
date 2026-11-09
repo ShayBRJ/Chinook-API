@@ -15,7 +15,35 @@ services:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - 9000
+    depends_on:
+      - db
+    networks:
+      - chinook-net
+    volumes:
+      - ./web:/var/www/html
+    environment:
+      DB_HOST: ${DB_HOST}                               
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+  nginx:
+    image: nginx:stable
+    volumes:
+      - ./web:/var/www/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8100:80"                               
+    depends_on:
+      - php
+    networks:
+      - chinook-net
 
 volumes:
   db-data:
